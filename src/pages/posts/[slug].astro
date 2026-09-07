@@ -27,7 +27,7 @@ const linkOf = (g: (typeof groups)[number]) => `/posts/${g.base}`;
   <div class="container">
     <article class="article">
       <div class="article__meta">
-        <a href="/publications">
+        <a href="/blog">
           <span data-lang="zh">{zh?.data.category}</span><span data-lang="en">{en?.data.category}</span>
         </a>
         <span aria-hidden="true">·</span>
@@ -98,7 +98,7 @@ const linkOf = (g: (typeof groups)[number]) => `/posts/${g.base}`;
         </section>
       )}
 
-      <a href="/publications" class="article__back" data-i18n="article.back">← 返回全部出版物</a>
+      <a href="/blog" class="article__back" data-i18n="article.back">← 返回博客</a>
     </article>
   </div>
 </Layout>
