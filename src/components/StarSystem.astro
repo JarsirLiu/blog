@@ -1,0 +1,136 @@
+---
+interface Props {
+  /** Extra class names, e.g. "page-hero__mark" for sizing. */
+  class?: string;
+  /** Accessible label kept for screen readers (the canvas is decorative). */
+  label?: string;
+}
+
+const { class: className = '', label = '动态多星系统' } = Astro.props;
+---
+
+<canvas class={`star-system ${className}`.trim()} aria-label={label} role="img"></canvas>
+
+<script>
+  interface StarDef {
+    dist: number;
+    size: number;
+    color: string;
+    speed: number;
+    planets: number;
+    pColor: string;
+    angle?: number;
+    planetsData?: { dist: number; size: number; angle: number; speed: number }[];
+  }
+
+  function initStarSystem(canvas: HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let size = 0;
+
+    const INK = '#1c1b18';
+    const sysStars: StarDef[] = [
+      { dist: 0.0,  size: 7.0, color: INK,        speed: 0,     planets: 0, pColor: INK },
+      { dist: 0.34, size: 4.0, color: '#9a7b4f', speed: 0.34,  planets: 2, pColor: '#9a7b4f' },
+      { dist: 0.50, size: 3.4, color: '#5b7a99', speed: -0.27, planets: 1, pColor: '#5b7a99' },
+      { dist: 0.64, size: 3.0, color: '#a86b6b', speed: 0.20,  planets: 1, pColor: '#a86b6b' },
+      { dist: 0.76, size: 2.6, color: '#6b8f6b', speed: -0.15, planets: 0, pColor: '#6b8f6b' },
+    ];
+
+    sysStars.forEach((s) => {
+      s.angle = Math.random() * Math.PI * 2;
+      s.planetsData = [];
+      for (let i = 0; i < s.planets; i++) {
+        s.planetsData.push({
+          dist: 0.11 + i * 0.07 + Math.random() * 0.02,
+          size: 1.3 + Math.random() * 1.1,
+          angle: Math.random() * Math.PI * 2,
+          speed: (0.6 + Math.random() * 0.8) * (i % 2 ? -1 : 1),
+        });
+      }
+    });
+
+    let t = 0;
+    let mx = 0, my = 0;
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      size = rect.width;
+      canvas.width = Math.round(size * dpr);
+      canvas.height = Math.round(size * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function draw() {
+      const R = size;
+      const cx = R / 2 + mx;
+      const cy = R / 2 + my;
+      ctx.clearRect(0, 0, R, R);
+
+      ctx.strokeStyle = 'rgba(28,27,24,0.14)';
+      ctx.lineWidth = 1;
+      for (const s of sysStars) {
+        if (s.dist > 0) {
+          ctx.beginPath();
+          ctx.arc(cx, cy, s.dist * R * 0.5, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      for (const s of sysStars) {
+        const ang = (s.angle ?? 0) + t * s.speed;
+        const px = cx + Math.cos(ang) * s.dist * R * 0.5;
+        const py = cy + Math.sin(ang) * s.dist * R * 0.5;
+
+        const gg = ctx.createRadialGradient(px, py, 0, px, py, s.size * 3.2);
+        gg.addColorStop(0, s.color + '59');
+        gg.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = gg;
+        ctx.beginPath();
+        ctx.arc(px, py, s.size * 3.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = s.color;
+        ctx.beginPath();
+        ctx.arc(px, py, s.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        for (const p of s.planetsData ?? []) {
+          const pa = p.angle + t * p.speed;
+          const ppx = px + Math.cos(pa) * p.dist * R * 0.5;
+          const ppy = py + Math.sin(pa) * p.dist * R * 0.5;
+          ctx.fillStyle = s.pColor;
+          ctx.beginPath();
+          ctx.arc(ppx, ppy, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    function loop() {
+      t += 0.005;
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('resize', resize);
+    canvas.addEventListener('pointermove', (e) => {
+      const r = canvas.getBoundingClientRect();
+      mx = ((e.clientX - r.left) / r.width - 0.5) * size * 0.08;
+      my = ((e.clientY - r.top) / r.height - 0.5) * size * 0.08;
+    });
+    canvas.addEventListener('pointerleave', () => {
+      mx = 0;
+      my = 0;
+    });
+
+    resize();
+    if (reduce) draw();
+    else loop();
+  }
+
+  document.querySelectorAll<HTMLCanvasElement>('canvas.star-system').forEach(initStarSystem);
+</script>

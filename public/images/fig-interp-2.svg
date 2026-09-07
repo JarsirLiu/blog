@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <rect x="0.5" y="0.5" width="819" height="479" rx="14" fill="#f4f1ea" stroke="#e3ddd0"/>
+
+  <text x="40" y="40" font-size="15" fill="#1c1b18" font-weight="600">全局工作空间假说 · Global Workspace</text>
+
+  <!-- peripheral nodes -->
+  <g font-size="14" fill="#1c1b18" text-anchor="middle">
+    <!-- positions around center (410,250) radius 190 -->
+    <!-- top -->
+    <circle cx="410" cy="60"  r="34" fill="#ffffff" stroke="#9a948a"/>
+    <text x="410" y="64">感知</text>
+    <!-- upper right -->
+    <circle cx="640" cy="160" r="34" fill="#ffffff" stroke="#9a948a"/>
+    <text x="640" y="164">语言</text>
+    <!-- lower right -->
+    <circle cx="600" cy="380" r="34" fill="#ffffff" stroke="#9a948a"/>
+    <text x="600" y="384">规划</text>
+    <!-- bottom -->
+    <circle cx="410" cy="440" r="34" fill="#ffffff" stroke="#9a948a"/>
+    <text x="410" y="444">记忆</text>
+    <!-- lower left -->
+    <circle cx="220" cy="380" r="34" fill="#ffffff" stroke="#9a948a"/>
+    <text x="220" y="384">价值</text>
+    <!-- upper left -->
+    <circle cx="180" cy="160" r="34" fill="#ffffff" stroke="#9a948a"/>
+    <text x="180" y="164">运动</text>
+  </g>
+
+  <!-- inactive connections -->
+  <g stroke="#b9b2a6" stroke-width="1.4" fill="none">
+    <line x1="410" y1="94"  x2="410" y2="206"/>
+    <line x1="606" y1="186" x2="466" y2="224"/>
+    <line x1="566" y1="354" x2="464" y2="278"/>
+    <line x1="410" y1="406" x2="410" y2="294"/>
+    <line x1="254" y1="354" x2="356" y2="278"/>
+    <line x1="214" y1="186" x2="354" y2="224"/>
+  </g>
+
+  <!-- active connection: 语言 -> center (amber) -->
+  <line x1="606" y1="186" x2="466" y2="224" stroke="#c75f2c" stroke-width="2.6"/>
+  <circle cx="536" cy="205" r="5" fill="#c75f2c"/>
+
+  <!-- center hub -->
+  <circle cx="410" cy="250" r="56" fill="#1c1b18"/>
+  <text x="410" y="246" font-size="15" fill="#f4f1ea" text-anchor="middle" font-weight="600">全局</text>
+  <text x="410" y="266" font-size="15" fill="#f4f1ea" text-anchor="middle" font-weight="600">工作空间</text>
+
+  <text x="410" y="462" font-size="13" fill="#c75f2c" text-anchor="middle" font-weight="600">当前被广播的模块 · currently broadcast</text>
+</svg>

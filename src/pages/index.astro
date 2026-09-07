@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StarSystem from '../components/StarSystem.astro';
+import { getCollection } from 'astro:content';
+
+const teams = (await getCollection('teams')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Layout
+  title="研究 — Studio"
+  description="我们的研究团队探索人工智能系统的安全性、内部机理与社会影响。"
+>
+  <div class="container">
+    <section class="page-hero">
+      <h1 class="page-hero__title" aria-label="研究 / Research">
+        <StarSystem class="page-hero__mark" />
+        <span class="visually-hidden" data-i18n="home.title">研究</span>
+      </h1>
+
+      <div>
+        <p class="page-hero__lede" data-i18n="home.lede">
+          Our research teams investigate the safety, inner workings, and societal impacts of AI
+          systems — so that artificial intelligence has a positive impact as it becomes
+          increasingly capable.
+        </p>
+
+        <div class="page-hero__meta">
+          <span class="page-hero__meta-label" data-i18n="home.teamsLabel">研究团队：</span>
+          <div class="page-hero__meta-links">
+            {teams.map((team, idx) => (
+              <>
+                <a href={team.data.href ?? `/teams/${team.slug}`}>
+                  <span data-lang="zh">{team.data.nameZh}</span><span data-lang="en">{team.data.nameEn}</span>
+                </a>
+                {idx < teams.length - 1 && <span aria-hidden="true">·</span>}
+              </>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="teams" aria-label="研究团队">
+      <div class="teams__grid">
+        {teams.map((team) => (
+          <article class="team-card">
+            <h3>
+              <span data-lang="zh">{team.data.nameZh}</span><span data-lang="en">{team.data.nameEn}</span>
+            </h3>
+            <p>
+              <span data-lang="zh">{team.data.descriptionZh}</span><span data-lang="en">{team.data.descriptionEn}</span>
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>

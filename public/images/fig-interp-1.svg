@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="a-ink" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#1c1b18"/>
+    </marker>
+    <marker id="a-amber" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#c75f2c"/>
+    </marker>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="819" height="479" rx="14" fill="#f4f1ea" stroke="#e3ddd0"/>
+
+  <!-- group label -->
+  <text x="40" y="40" font-size="15" fill="#1c1b18" font-weight="600">输入序列</text>
+  <text x="640" y="40" font-size="15" fill="#1c1b18" font-weight="600">输出</text>
+
+  <!-- input tokens -->
+  <g font-size="18" fill="#1c1b18" text-anchor="middle">
+    <rect x="40" y="96"  width="56" height="56" rx="10" fill="#ffffff" stroke="#1c1b18"/>
+    <text x="68" y="131">t₁</text>
+    <rect x="40" y="184" width="56" height="56" rx="10" fill="#ffffff" stroke="#1c1b18"/>
+    <text x="68" y="219">t₂</text>
+    <rect x="40" y="272" width="56" height="56" rx="10" fill="#ffffff" stroke="#1c1b18"/>
+    <text x="68" y="307">t₃</text>
+    <rect x="40" y="360" width="56" height="56" rx="10" fill="#ffffff" stroke="#1c1b18"/>
+    <text x="68" y="395">t₄</text>
+  </g>
+
+  <!-- residual stream (right of blocks) -->
+  <line x1="520" y1="80" x2="520" y2="420" stroke="#1c1b18" stroke-width="1.5" stroke-dasharray="2 4"/>
+  <text x="528" y="250" font-size="12" fill="#6b6660" transform="rotate(90 528 250)">残差流 · residual stream</text>
+
+  <!-- three layers -->
+  <g font-size="13" fill="#1c1b18" text-anchor="middle">
+    <!-- layer 1 -->
+    <rect x="300" y="80" width="200" height="110" rx="12" fill="#ffffff" stroke="#1c1b18"/>
+    <rect x="312" y="92"  width="176" height="42" rx="8" fill="#f0ece4" stroke="#9a948a"/>
+    <text x="400" y="118">注意力 · Attention</text>
+    <rect x="312" y="138" width="176" height="42" rx="8" fill="#f0ece4" stroke="#9a948a"/>
+    <text x="400" y="164">前馈 · MLP</text>
+    <!-- layer 2 -->
+    <rect x="300" y="200" width="200" height="110" rx="12" fill="#ffffff" stroke="#1c1b18"/>
+    <rect x="312" y="212" width="176" height="42" rx="8" fill="#f0ece4" stroke="#9a948a"/>
+    <text x="400" y="238">注意力 · Attention</text>
+    <rect x="312" y="258" width="176" height="42" rx="8" fill="#f0ece4" stroke="#9a948a"/>
+    <text x="400" y="284">前馈 · MLP</text>
+    <!-- layer 3 -->
+    <rect x="300" y="320" width="200" height="110" rx="12" fill="#ffffff" stroke="#1c1b18"/>
+    <rect x="312" y="332" width="176" height="42" rx="8" fill="#f0ece4" stroke="#9a948a"/>
+    <text x="400" y="358">注意力 · Attention</text>
+    <rect x="312" y="378" width="176" height="42" rx="8" fill="#f0ece4" stroke="#9a948a"/>
+    <text x="400" y="404">前馈 · MLP</text>
+  </g>
+
+  <!-- output box with logit bars -->
+  <rect x="640" y="330" width="120" height="110" rx="12" fill="#ffffff" stroke="#1c1b18"/>
+  <g>
+    <rect x="656" y="348" width="14" height="74" fill="#c75f2c"/>
+    <rect x="680" y="372" width="14" height="50" fill="#9a948a"/>
+    <rect x="704" y="360" width="14" height="62" fill="#9a948a"/>
+    <rect x="728" y="388" width="14" height="34" fill="#9a948a"/>
+  </g>
+
+  <!-- grey feed arrows -->
+  <g stroke="#1c1b18" stroke-width="1.2" fill="none" marker-end="url(#a-ink)">
+    <line x1="96" y1="124" x2="296" y2="124"/>
+    <line x1="96" y1="212" x2="296" y2="212"/>
+    <line x1="96" y1="300" x2="296" y2="300"/>
+    <line x1="96" y1="388" x2="296" y2="388"/>
+    <line x1="500" y1="375" x2="636" y2="375"/>
+  </g>
+
+  <!-- amber activated circuit -->
+  <g stroke="#c75f2c" stroke-width="2.4" fill="none" marker-end="url(#a-amber)">
+    <line x1="96" y1="212" x2="296" y2="212"/>
+    <line x1="400" y1="134" x2="400" y2="212"/>
+    <line x1="400" y1="254" x2="400" y2="334"/>
+    <line x1="400" y1="376" x2="400" y2="375" opacity="0"/>
+    <line x1="500" y1="375" x2="636" y2="375" opacity="0"/>
+  </g>
+  <!-- amber highlight inside attention blocks -->
+  <g fill="#c75f2c">
+    <circle cx="400" cy="113" r="4"/>
+    <circle cx="400" cy="233" r="4"/>
+    <circle cx="400" cy="353" r="4"/>
+  </g>
+  <text x="400" y="455" font-size="13" fill="#c75f2c" text-anchor="middle" font-weight="600">被激活的回路 · activated circuit</text>
+</svg>

@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getPostGroups, fmtZh, fmtEn } from '../lib/posts';
+
+const posts = await getPostGroups();
+const linkOf = (g: (typeof posts)[number]) => `/posts/${g.base}`;
+---
+
+<Layout title="博客 — Studio" description="长篇技术写作、项目更新与现场研究报告。">
+  <div class="container">
+    <header class="page-hero" style="padding-block: var(--space-6) var(--space-5);">
+      <h1 class="page-hero__title" data-i18n="blog.title" style="font-size: clamp(48px, 7vw, 88px);">博客</h1>
+      <p class="page-hero__lede" data-i18n="blog.lede">
+        Long-form technical writing from our engineers and researchers — the kind of post we
+        wished existed when we were figuring this stuff out ourselves.
+      </p>
+    </header>
+
+    <section class="news-list" style="max-width: 800px; margin-top: var(--space-6);">
+      {posts.map((g) => (
+        <a href={linkOf(g)} class="news-item">
+          <div class="news-item__meta">
+            <span><span data-lang="zh">{g.zh?.data.category}</span><span data-lang="en">{g.en?.data.category}</span></span>
+            <span aria-hidden="true">·</span>
+            <span><span data-lang="zh">{fmtZh(g.zh.data.publishDate)}</span><span data-lang="en">{fmtEn(g.zh.data.publishDate)}</span></span>
+            {g.zh?.data.author && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span><span data-lang="zh">{g.zh?.data.author}</span><span data-lang="en">{g.en?.data.author}</span></span>
+              </>
+            )}
+          </div>
+          <h3 class="news-item__title">
+            <span data-lang="zh">{g.zh?.data.title}</span><span data-lang="en">{g.en?.data.title}</span>
+          </h3>
+          <p class="news-item__excerpt">
+            <span data-lang="zh">{g.zh?.data.summary}</span><span data-lang="en">{g.en?.data.summary}</span>
+          </p>
+        </a>
+      ))}
+    </section>
+  </div>
+</Layout>

@@ -1,0 +1,73 @@
+---
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    i18n: 'footer.col.research',
+    links: [
+      { zh: '概览', en: 'Overview', href: '/' },
+      { zh: '新闻', en: 'News', href: '/news' },
+      { zh: '出版物', en: 'Publications', href: '/publications' },
+      { zh: '开放问题', en: 'Open problems', href: '/open-problems' },
+    ],
+  },
+  {
+    i18n: 'footer.col.company',
+    links: [
+      { zh: '关于', en: 'About', href: '/about' },
+      { zh: '招聘', en: 'Careers', href: '/careers' },
+      { zh: '媒体', en: 'Press', href: '/press' },
+      { zh: '联系', en: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    i18n: 'footer.col.resources',
+    links: [
+      { zh: '博客', en: 'Blog', href: '/blog' },
+      { zh: 'RSS 订阅', en: 'RSS feed', href: '/rss.xml' },
+      { zh: '订阅简报', en: 'Newsletter', href: '/newsletter' },
+      { zh: '品牌', en: 'Brand', href: '/brand' },
+    ],
+  },
+];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <a href="/" class="site-logo">
+          <span class="site-logo__mark" aria-hidden="true"></span>
+          <span>STUDIO</span>
+        </a>
+        <p>
+          <span data-lang="zh">一家以研究驱动的技术研究院，发布报告、技术随笔与新闻。</span>
+          <span data-lang="en">A research-driven technology studio publishing reports, technical essays, and news.</span>
+        </p>
+      </div>
+
+      {columns.map((col) => (
+        <div class="site-footer__col">
+          <h4 data-i18n={col.i18n}>Research</h4>
+          <ul>
+            {col.links.map((link) => (
+              <li>
+                <a href={link.href}>
+                  <span data-lang="zh">{link.zh}</span><span data-lang="en">{link.en}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="site-footer__bottom">
+      <span data-i18n="footer.rights">© {year} Studio 研究院。保留所有权利。</span>
+      <span>
+        <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> ·
+        <a href="/rss.xml">RSS</a>
+      </span>
+    </div>
+  </div>
+</footer>

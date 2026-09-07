@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="关于 — Studio" description="关于 Studio：一家以研究驱动的技术研究院。">
+  <div class="container">
+    <header class="page-hero" style="padding-block: var(--space-6) var(--space-5);">
+      <h1 class="page-hero__title" data-i18n="about.title" style="font-size: clamp(48px, 7vw, 88px);">关于</h1>
+      <p class="page-hero__lede" data-i18n="about.lede">
+        Studio is a research-driven technology company. We build models, products, and
+        evaluations — and we publish what we learn so others can build on it.
+      </p>
+    </header>
+
+    <section
+      style="max-width: 720px; margin-top: var(--space-7); font-family: var(--font-serif);
+             font-size: 19px; line-height: 1.65;"
+    >
+      <p data-lang="zh">
+        我们相信，把研究成果——包括那些没能走通的部分——公开出来，是让整个领域加速进步的最快方式。这里发布的大部分内容在发布前都经过了同行评审，但我们也会在研究预览阶段就贴出仍在被检验的工作。
+      </p>
+      <p data-lang="zh">
+        我们的研究分为五个团队：<a href="/">对齐</a>、<a href="/">经济学</a>、<a href="/">可解释性</a>、<a href="/">社会影响</a> 与 <a href="/">前沿红队</a>。
+      </p>
+      <p data-lang="zh">
+        如需就研究协作事宜联系我们，请发邮件至 <a href="mailto:research@example.com">research@example.com</a>。
+      </p>
+
+      <p data-lang="en">
+        We believe that publishing the work — including the parts that didn't pan out — is the
+        fastest way to make the field progress. Most of what we publish here is peer-reviewed
+        before release, but we also post research previews while they are still being checked.
+      </p>
+      <p data-lang="en">
+        Our research is organized into five teams: <a href="/">Alignment</a>,
+        <a href="/">Economics</a>, <a href="/">Interpretability</a>,
+        <a href="/">Societal Impacts</a>, and <a href="/">Frontier Red Team</a>.
+      </p>
+      <p data-lang="en">
+        To get in touch about a research collaboration, email
+        <a href="mailto:research@example.com">research@example.com</a>.
+      </p>
+    </section>
+  </div>
+</Layout>

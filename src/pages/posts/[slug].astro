@@ -1,0 +1,104 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getPostGroups, fmtZh, fmtEn } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const groups = await getPostGroups();
+  return groups.map((g) => ({ params: { slug: g.base } }));
+}
+
+const groups = await getPostGroups();
+const group = groups.find((g) => g.base === Astro.params.slug)!;
+const { zh, en } = group;
+
+const ContentZh = zh ? (await zh.render()).Content : null;
+const ContentEn = en ? (await en.render()).Content : null;
+
+const related = groups
+  .filter((g) => g !== group && g.zh?.data.category === zh?.data.category)
+  .slice(0, 2);
+const linkOf = (g: (typeof groups)[number]) => `/posts/${g.base}`;
+---
+
+<Layout
+  title={`${zh?.data.title ?? en?.data.title} — Studio`}
+  description={zh?.data.summary ?? en?.data.summary}
+>
+  <div class="container">
+    <article class="article">
+      <div class="article__meta">
+        <a href="/publications">
+          <span data-lang="zh">{zh?.data.category}</span><span data-lang="en">{en?.data.category}</span>
+        </a>
+        <span aria-hidden="true">·</span>
+        <span>
+          <span data-lang="zh">{zh && fmtZh(zh.data.publishDate)}</span>
+          <span data-lang="en">{en && fmtEn(en.data.publishDate)}</span>
+        </span>
+        {zh?.data.author && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span><span data-lang="zh">{zh.data.author}</span><span data-lang="en">{en?.data.author}</span></span>
+          </>
+        )}
+      </div>
+
+      <h1 class="article__title">
+        <span data-lang="zh">{zh?.data.title}</span><span data-lang="en">{en?.data.title}</span>
+      </h1>
+      <p class="article__lede">
+        <span data-lang="zh">{zh?.data.summary}</span><span data-lang="en">{en?.data.summary}</span>
+      </p>
+
+      <div
+        style={`aspect-ratio: 16 / 9; border-radius: 12px; margin-bottom: var(--space-7);
+                 background: ${zh?.data.coverGradient ?? en?.data.coverGradient}; display:flex;
+                 align-items:center; justify-content:center;
+                 color: rgba(255,255,255,0.9); font-family: var(--font-serif);
+                 letter-spacing: 0.05em; text-transform: uppercase; font-size: 14px;`}
+      >
+        <span data-lang="zh">{zh?.data.coverLabel}</span><span data-lang="en">{en?.data.coverLabel}</span>
+      </div>
+
+      <div class="article__body">
+        {zh && ContentZh && <div data-lang="zh"><ContentZh /></div>}
+        {en && ContentEn && <div data-lang="en"><ContentEn /></div>}
+      </div>
+
+      {zh?.data.tags.length > 0 && (
+        <div style="margin-top: var(--space-7); display:flex; flex-wrap:wrap; gap:8px;">
+          <span data-lang="zh" style="display:contents;">
+            {zh.data.tags.map((tag: string) => <span class="chip">#{tag}</span>)}
+          </span>
+          <span data-lang="en" style="display:contents;">
+            {en?.data.tags.map((tag: string) => <span class="chip">#{tag}</span>)}
+          </span>
+        </div>
+      )}
+
+      {related.length > 0 && (
+        <section style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--color-border);">
+          <h2 style="font-size: 22px; margin-bottom: var(--space-4);" data-i18n="article.related">相关阅读</h2>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-4);">
+            {related.map((g) => (
+              <li>
+                <a href={linkOf(g)} style="text-decoration: none; color: var(--color-text);">
+                  <div style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 4px;">
+                    <span data-lang="zh">{g.zh?.data.category}</span><span data-lang="en">{g.en?.data.category}</span>
+                    <span aria-hidden="true"> · </span>
+                    <span><span data-lang="zh">{g.zh && fmtZh(g.zh.data.publishDate)}</span><span data-lang="en">{g.en && fmtEn(g.en.data.publishDate)}</span></span>
+                  </div>
+                  <div style="font-family: var(--font-serif); font-size: 18px;">
+                    <span data-lang="zh">{g.zh?.data.title}</span><span data-lang="en">{g.en?.data.title}</span>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <a href="/publications" class="article__back" data-i18n="article.back">← 返回全部出版物</a>
+    </article>
+  </div>
+</Layout>

@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getPostGroups, fmtZh, fmtEn } from '../lib/posts';
+
+const posts = await getPostGroups();
+const featured = posts.find((g) => g.zh?.data.featured || g.en?.data.featured) ?? posts[0];
+const list = posts.filter((g) => g !== featured).slice(0, 6);
+const linkOf = (g: (typeof posts)[number]) => `/posts/${g.base}`;
+---
+
+<Layout title="新闻 — Studio" description="来自研究团队的最新动态：技术随笔、评估结果与现场研究。">
+  <div class="container">
+    <section class="page-hero" style="padding-block: var(--space-6) var(--space-5);">
+      <h1 class="page-hero__title" data-i18n="news.title" style="font-size: clamp(48px, 7vw, 88px);">新闻</h1>
+      <p class="page-hero__lede" data-i18n="news.lede">
+        Updates from our research teams: technical essays, evaluations, and field reports.
+      </p>
+    </section>
+
+    <section class="news-layout">
+      <a href={linkOf(featured)} class="news-feature" aria-label={featured.zh?.data.title}>
+        <div
+          class="news-feature__media"
+          style={`background: ${featured.zh?.data.coverGradient ?? featured.en?.data.coverGradient};`}
+          aria-hidden="true"
+        >
+          <span data-lang="zh">{featured.zh?.data.coverLabel}</span><span data-lang="en">{featured.en?.data.coverLabel}</span>
+        </div>
+        <div class="news-feature__body">
+          <div class="news-feature__meta">
+            <span><span data-lang="zh">{featured.zh?.data.category}</span><span data-lang="en">{featured.en?.data.category}</span></span>
+            <span aria-hidden="true">·</span>
+            <span><span data-lang="zh">{fmtZh(featured.zh.data.publishDate)}</span><span data-lang="en">{fmtEn(featured.zh.data.publishDate)}</span></span>
+          </div>
+          <h2 class="news-feature__title">
+            <span data-lang="zh">{featured.zh?.data.title}</span><span data-lang="en">{featured.en?.data.title}</span>
+          </h2>
+        </div>
+      </a>
+
+      <div class="news-list">
+        {list.map((g) => (
+          <a href={linkOf(g)} class="news-item">
+            <div class="news-item__meta">
+              <span><span data-lang="zh">{g.zh?.data.category}</span><span data-lang="en">{g.en?.data.category}</span></span>
+              <span aria-hidden="true">·</span>
+              <span><span data-lang="zh">{fmtZh(g.zh.data.publishDate)}</span><span data-lang="en">{fmtEn(g.zh.data.publishDate)}</span></span>
+            </div>
+            <h3 class="news-item__title">
+              <span data-lang="zh">{g.zh?.data.title}</span><span data-lang="en">{g.en?.data.title}</span>
+            </h3>
+            <p class="news-item__excerpt">
+              <span data-lang="zh">{g.zh?.data.summary}</span><span data-lang="en">{g.en?.data.summary}</span>
+            </p>
+          </a>
+        ))}
+
+        <div class="news-list__more">
+          <a href="/publications" data-i18n="article.back">← 查看全部出版物</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

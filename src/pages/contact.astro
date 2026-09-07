@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="联系 — Studio" description="联系 Studio。">
+  <div class="container">
+    <header class="page-hero" style="padding-block: var(--space-6) var(--space-5);">
+      <h1 class="page-hero__title" data-i18n="contact.title" style="font-size: clamp(48px, 7vw, 88px);">联系我们</h1>
+      <p class="page-hero__lede" data-i18n="contact.lede">
+        Press, partnerships, and research collaboration inquiries — pick the right address and
+        we'll route your message.
+      </p>
+    </header>
+
+    <section
+      style="display:grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5);
+             margin-top: var(--space-7);"
+    >
+      <article class="team-card" style="padding: var(--space-5); border: 1px solid var(--color-border); border-radius: 12px;">
+        <h3 style="font-size: 18px;" data-i18n="contact.press">媒体</h3>
+        <p data-lang="zh">媒体咨询、embargo 报道与访谈请求。</p>
+        <p data-lang="en">For media inquiries, embargoed coverage, and interview requests.</p>
+        <a href="mailto:press@example.com">press@example.com</a>
+      </article>
+
+      <article class="team-card" style="padding: var(--space-5); border: 1px solid var(--color-border); border-radius: 12px;">
+        <h3 style="font-size: 18px;" data-i18n="contact.partners">合作</h3>
+        <p data-lang="zh">产品、基础设施与渠道分发合作。</p>
+        <p data-lang="en">For product, infrastructure, and distribution partnerships.</p>
+        <a href="mailto:partners@example.com">partners@example.com</a>
+      </article>
+
+      <article class="team-card" style="padding: var(--space-5); border: 1px solid var(--color-border); border-radius: 12px;">
+        <h3 style="font-size: 18px;" data-i18n="contact.research">研究</h3>
+        <p data-lang="zh">研究协作、评估与学术咨询。</p>
+        <p data-lang="en">For research collaboration, evaluations, and academic inquiries.</p>
+        <a href="mailto:research@example.com">research@example.com</a>
+      </article>
+    </section>
+  </div>
+</Layout>
